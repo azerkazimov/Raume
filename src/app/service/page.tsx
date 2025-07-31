@@ -25,7 +25,7 @@ export default async function Service() {
             key={user.id}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4 text-white text-xl font-bold shadow-md">
+              <div className="w-16 h-16  rounded-full flex items-center justify-center mb-4 text-gray-500 border border-gray-200 text-2xl font-bold shadow-md">
                 {user.username.charAt(0).toUpperCase()}
               </div>
               <h2 className="text-lg font-semibold text-gray-800 mb-2">
@@ -37,7 +37,7 @@ export default async function Service() {
             </div>
             <div className="w-full flex justify-center">
               <Link href={`/service/${user.id}`}>
-                <Button className="cursor-pointer mt-4">View</Button>
+                <Button className="cursor-pointer mt-4 bg-gray-500 hover:bg-gray-800">View</Button>
               </Link>
             </div>
           </div>

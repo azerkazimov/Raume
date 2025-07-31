@@ -12,12 +12,12 @@ export default async function Materials() {
           <Link key={material.id} href={`/materials/${material.href}`}>
             <div
               key={material.id}
-              className="flex flex-col gap-4 bg-white rounded-lg p-4 border border-gray-200"
+              className="flex flex-col gap-4 bg-white rounded-lg p-4 border border-gray-200 min-h-[200px]"
             >
               <h2 className="text-lg font-bold">{material.name}</h2>
-              <p>{material.description}</p>
+              <p className="text-sm text-gray-500 min-h-[40px]">{material.description}</p>
               <div className="flex justify-between">
-                <p>{material.price}</p>
+                <p>Price: <span className="text-xl font-bold">{material.price}</span></p>
                 <p>{material.category}</p>
               </div>
               <div className="flex justify-end">

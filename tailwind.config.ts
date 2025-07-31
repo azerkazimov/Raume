@@ -26,11 +26,13 @@ const config: Config = {
         },
       },
       fontFamily: {
-        'antic': ['Antic Didone', 'serif'],
+        'antic': ['var(--font-family-antic)', 'serif'],
         'montserrat': ['Montserrat', 'sans-serif'],
         'nunito': ['Nunito', 'sans-serif'],
         'poppins': ['Poppins', 'sans-serif'],
         'quicksand': ['Quicksand', 'sans-serif'],
+
+        'serif': ['Antic Didone', 'Georgia', 'serif'],
       }
     },
   },

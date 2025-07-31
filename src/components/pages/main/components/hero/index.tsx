@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import SectionHeader from "@/components/ui/section-header";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -6,9 +7,7 @@ export default function Hero() {
   return (
     <>
       <div className="bg-[rgb(196,196,196)] w-full flex justify-center items-center lg:min-h-[580px] md:items-end overflow-hidden">
-        <h1 className="md:text-[200px] lg:text-[300px] xl:text-[380px] text-[#e5e5e5] text-[100px] antic-didone-regular">
-          INTERIOR
-        </h1>
+        <SectionHeader title="INTERIOR" />
       </div>
       <div className="py-[100px] border-b border-black/10">
         <div className="container grid grid-cols-1 md:grid-cols-3 mt-6 text-center md:text-left gap-4 ">
