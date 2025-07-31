@@ -27,10 +27,14 @@ const config: Config = {
       },
       fontFamily: {
         'antic': ['Antic Didone', 'serif'],
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'nunito': ['Nunito', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'quicksand': ['Quicksand', 'sans-serif'],
       }
     },
   },
   plugins: [],
 }
 
-export default config 
+export default config

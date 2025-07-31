@@ -1,8 +1,11 @@
+import { UserProps } from "@/components/helpers/interfaces/user-props";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+
 export default async function Service() {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
+
 
   if (!response.ok) {
     throw new Error(`data not fetched`);
@@ -16,7 +19,7 @@ export default async function Service() {
         Our Team
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {data.map((user) => (
+        {data.map((user: UserProps) => (
           <div
             className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200"
             key={user.id}
