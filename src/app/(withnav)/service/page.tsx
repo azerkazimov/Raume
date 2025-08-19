@@ -6,14 +6,11 @@ import Link from "next/link";
 export default async function Service() {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
 
-
   if (!response.ok) {
     throw new Error(`data not fetched`);
   }
 
   const data = await response.json();
-  console.log(data);
-  
 
   return (
     <div className="container mx-auto px-4 py-8">
