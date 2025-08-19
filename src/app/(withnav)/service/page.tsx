@@ -12,6 +12,8 @@ export default async function Service() {
   }
 
   const data = await response.json();
+  console.log(data);
+  
 
   return (
     <div className="container mx-auto px-4 py-8">

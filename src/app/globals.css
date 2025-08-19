@@ -118,6 +118,9 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+body {
+  font-family: "Montserrat", sans-serif;
+}
 
 @layer base {
   * {

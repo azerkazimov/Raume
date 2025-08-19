@@ -3,6 +3,7 @@
 import { useCounter } from "@/components/helpers/hooks/counter";
 import { X } from "lucide-react";
 
+
 export default function About() {
   const projects = useCounter({ limit: 126, speed: 70 });
   const client = useCounter({ limit: 926, speed: 10 });

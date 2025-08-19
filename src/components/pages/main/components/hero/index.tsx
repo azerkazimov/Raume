@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <>
       <div className="bg-[rgb(196,196,196)] w-full flex justify-center items-center lg:min-h-[580px] md:items-end overflow-hidden">
-        <SectionHeader title="INTERIOR" />
+        <SectionHeader title="INTERIOR" color="#fff" />
       </div>
       <div className="py-[100px] border-b border-black/10">
         <div className="container grid grid-cols-1 md:grid-cols-3 mt-6 text-center md:text-left gap-4 ">

@@ -1,5 +1,3 @@
-
-
 export default async function UserPage({params}: {params: {id: string}}) {
     
     const response = await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`);
