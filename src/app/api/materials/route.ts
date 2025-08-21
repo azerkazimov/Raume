@@ -1,4 +1,4 @@
-import { materials } from "@/components/data/materials";
+import { materials } from "@/components/features/data/materials";
 import { NextResponse } from "next/server";
 
 export async function GET(){

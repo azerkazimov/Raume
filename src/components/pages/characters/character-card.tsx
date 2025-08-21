@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Character } from "@/components/helpers/interfaces/character-props";
+import { Character } from "@/components/features/helpers/interfaces/character-props";
 
 interface CharacterCardProps {
   character: Character;

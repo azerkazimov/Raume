@@ -1,5 +1,5 @@
 import CharacterCard from "@/components/pages/characters/character-card";
-import { CharactersResponse } from "@/components/helpers/interfaces/character-props";
+import { CharactersResponse } from "@/components/features/helpers/interfaces/character-props";
 
 export default async function Characters() {
     const response = await fetch("https://rickandmortyapi.com/api/character/");

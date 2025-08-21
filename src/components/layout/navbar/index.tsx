@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Search } from "lucide-react";
 import Image from "next/image";
+import { ProfileButton } from "@/components/features/shared/profile-button";
 
 export function Navbar() {
   return (
@@ -59,12 +60,11 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex gap-2">
+
           <Button className="rounded-full bg-white hover:bg-accent cursor-pointer w-[38px] h-[38px] flex items-center justify-center">
             <Search className="text-black" />
           </Button>
-          <Button className=" bg-white hover:bg-accent text-black cursor-pointer rounded-sm">
-            Button
-          </Button>
+          <ProfileButton />
         </div>
       </div>
     </div>

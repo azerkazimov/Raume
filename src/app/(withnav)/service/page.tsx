@@ -1,4 +1,4 @@
-import { UserProps } from "@/components/helpers/interfaces/user-props";
+import { UserProps } from "@/components/features/helpers/interfaces/user-props";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

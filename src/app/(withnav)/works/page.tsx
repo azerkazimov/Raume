@@ -1,4 +1,4 @@
-import { PostProps } from "@/components/helpers/interfaces/post-props";
+import { PostProps } from "@/components/features/helpers/interfaces/post-props";
 import Link from "next/link";
 
 export default async function WorksPage() {

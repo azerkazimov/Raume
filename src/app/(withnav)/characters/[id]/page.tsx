@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Character } from "@/components/helpers/interfaces/character-props";
+import { Character } from "@/components/features/helpers/interfaces/character-props";
 
 export default async function CharacterPage({params}: {params: {id: string}}) {
     const response = await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);

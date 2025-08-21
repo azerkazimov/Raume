@@ -1,6 +1,6 @@
 "use client";
 
-import { useCounter } from "@/components/helpers/hooks/counter";
+import { useCounter } from "@/components/features/helpers/hooks/counter";
 import { X } from "lucide-react";
 
 

@@ -1,4 +1,4 @@
-import { MaterialProps } from "@/components/helpers/interfaces/material-props";
+import { MaterialProps } from "@/components/features/helpers/interfaces/material-props";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
