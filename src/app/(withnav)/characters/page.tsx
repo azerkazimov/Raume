@@ -1,5 +1,6 @@
 import CharacterCard from "@/components/pages/characters/character-card";
 import { CharactersResponse } from "@/components/features/helpers/interfaces/character-props";
+import Counter from "@/components/features/shared/counter/counter";
 
 export default async function Characters() {
     const response = await fetch("https://rickandmortyapi.com/api/character/");
@@ -27,6 +28,7 @@ export default async function Characters() {
                     </p>
                 </div>
             )}
+            <Counter counter={10} />
         </div>
     );
 }
