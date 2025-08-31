@@ -1,5 +1,6 @@
 "use client";
 
+import { AuthProps } from "@/components/features/helpers/interfaces/auth-props";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,12 +15,43 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 export default function SignIn() {
-  
+  const router = useRouter();
   const session = useSession();
 
   console.log(session);
+
+  const { register, handleSubmit } = useForm<AuthProps>();
+
+  const onSubmit = async (data: AuthProps) => {
+    try {
+      const response = await fetch("/api/users")
+      const user = await response.json();
+
+      if(!response.ok) {
+        throw new Error(user.error || "Something went wrong");
+      }
+
+      const signInResult = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: true,
+        redirectTo: "/dashboard",
+      })
+
+      if(signInResult?.error) {
+        throw new Error(signInResult.error || "Something went wrong");
+      }
+
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Login failed", error);
+      
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -36,11 +68,12 @@ export default function SignIn() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  {...register("email")}
                   id="email"
                   type="email"
                   placeholder="m@example.com"
@@ -57,15 +90,20 @@ export default function SignIn() {
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  {...register("password")}
+                  id="password"
+                  type="password"
+                  required
+                />
               </div>
             </div>
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
           <Button
             variant="outline"
             className="w-full"
