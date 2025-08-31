@@ -1,5 +1,6 @@
 "use client";
 
+import { AuthProps } from "@/components/features/helpers/interfaces/auth-props";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,43 +14,34 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function SignUp() {
   const router = useRouter();
 
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const {register, handleSubmit} = useForm<AuthProps>()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: AuthProps) => {
     try {
       const response = await fetch("/api/users", {
         method: "POST",
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       });
 
-      const data = await response.json();
-      console.log(data);
+      const user = await response.json();
+      console.log(user);
 
       if(response.ok){
         router.push("/auth/signin");
       }else{
-        throw new Error(data.error || "Something went wrong");
+        throw new Error(user.error || "Something went wrong");
       }
 
       const signInResponse = await signIn("credentials", {
-        email: form.email,
-        password: form.password,
-        redirect: false,
+        email: data.email,
+        password: data.password,
+        redirect: true,
+        redirectTo: "/dashboard",
       });
 
       if(signInResponse?.error){
@@ -73,27 +65,27 @@ export default function SignUp() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
+                  {...register("name")}
                   id="name"
                   name="name"
                   type="text"
                   placeholder="John Doe"
                   required
-                  onChange={handleChange}
                 />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  {...register("email")}
                   id="email"
                   name="email"
                   type="email"
                   placeholder="mail@example.com"
-                  onChange={handleChange}
                   required
                 />
               </div>
@@ -102,11 +94,11 @@ export default function SignUp() {
                   <Label htmlFor="password">Password</Label>
                 </div>
                 <Input
+                  {...register("password")}
                   id="password"
                   name="password"
                   type="password"
                   placeholder="********"
-                  onChange={handleChange}
                   required
                 />
               </div>

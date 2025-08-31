@@ -16,6 +16,7 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function SignIn() {
+  
   const session = useSession();
 
   console.log(session);
