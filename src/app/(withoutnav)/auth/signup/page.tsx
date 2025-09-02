@@ -1,6 +1,5 @@
 "use client";
 
-import { AuthProps } from "@/components/features/helpers/interfaces/auth-props";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { SignUpSchema, signUpSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from 'react-hot-toast';
 
 export default function SignUp() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function SignUp() {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = async (data: AuthProps) => {
+  const onSubmit = async (data: SignUpSchema) => {
     try {
       const response = await fetch("/api/users", {
         method: "POST",
@@ -40,13 +40,13 @@ export default function SignUp() {
       console.log(user);
 
       if (response.ok) {
+        toast.success("Account created successfully");
         router.push("/auth/signin");
       } else {
         throw new Error(user.error || "Something went wrong");
       }
-      router.push("/auth/signin");
     } catch (error) {
-      console.error(error);
+      toast.error("Something went wrong");
     }
   };
 

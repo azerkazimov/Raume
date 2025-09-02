@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthProps } from "@/components/features/helpers/interfaces/auth-props";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,6 +17,9 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { signInSchema, SignInSchema } from "../schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 
 export default function SignIn() {
   const router = useRouter();
@@ -24,15 +27,21 @@ export default function SignIn() {
 
   console.log(session);
 
-  const { register, handleSubmit } = useForm<AuthProps>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
+  });
 
-  const onSubmit = async (data: AuthProps) => {
+  const onSubmit = async (data: SignInSchema) => {
     try {
-      const response = await fetch("/api/users")
+      const response = await fetch("/api/users");
       const user = await response.json();
 
-      if(!response.ok) {
-        throw new Error(user.error || "Something went wrong");
+      if (!response.ok) {
+        toast.error(user.error || "Something went wrong");
       }
 
       const signInResult = await signIn("credentials", {
@@ -40,16 +49,15 @@ export default function SignIn() {
         password: data.password,
         redirect: true,
         redirectTo: "/dashboard",
-      })
+      });
 
-      if(signInResult?.error) {
-        throw new Error(signInResult.error || "Something went wrong");
+      if (signInResult?.error) {
+        toast.error(signInResult.error || "Something went wrong");
       }
-
+      toast.success("Login successful");
       router.push("/dashboard");
     } catch (error) {
-      console.error("Login failed", error);
-      
+      toast.error(`Something went wrong: ${error}`);
     }
   };
 
@@ -77,9 +85,11 @@ export default function SignIn() {
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  required
                 />
               </div>
+              {errors.email && (
+                <span className="text-red-500">{errors.email.message}</span>
+              )}
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
@@ -94,11 +104,13 @@ export default function SignIn() {
                   {...register("password")}
                   id="password"
                   type="password"
-                  required
                 />
+                {errors.password && (
+                  <span className="text-red-500">{errors.password.message}</span>
+                )}
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full mt-4">
               Login
             </Button>
           </form>
