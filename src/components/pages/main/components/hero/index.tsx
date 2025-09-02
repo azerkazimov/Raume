@@ -1,13 +1,20 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import SectionHeader from "@/components/ui/section-header";
 import { ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
+
 import Link from "next/link";
 
 export default function Hero() {
+  const t = useTranslations('HomePage');
+  
+
   return (
     <>
       <div className="bg-[rgb(196,196,196)] w-full flex justify-center items-center lg:min-h-[580px] md:items-end overflow-hidden">
-        <SectionHeader title="INTERIOR" color="#fff" />
+        <SectionHeader title={t('title')} color="#fff" />
       </div>
       <div className="py-[100px] border-b border-black/10">
         <div className="container grid grid-cols-1 md:grid-cols-3 mt-6 text-center md:text-left gap-4 ">
@@ -26,7 +33,7 @@ export default function Hero() {
             <div className="flex flex-col max-w-[689px]">
               <div className="flex">
                 <h2 className="text-center md:text-left text-[64px]/[80px] font-light  font-montserrat tracking-[3px] ">
-                  Beautifully Arranged
+                  {t('about.title')}
                 </h2>
               </div>
               <div className="flex flex-col gap-12 justify-center items-center pr-[50px] md:flex-row md:justify-between">

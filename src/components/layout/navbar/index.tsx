@@ -13,6 +13,7 @@ import {
 import { Search } from "lucide-react";
 import Image from "next/image";
 import { ProfileButton } from "@/components/features/shared/profile-button";
+import { LanguageSwitcher } from "@/components/features/shared/language-switcher";
 
 export function Navbar() {
   return (
@@ -65,6 +66,7 @@ export function Navbar() {
             <Search className="text-black" />
           </Button>
           <ProfileButton />
+          <LanguageSwitcher />
         </div>
       </div>
     </div>

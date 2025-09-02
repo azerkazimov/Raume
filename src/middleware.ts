@@ -1,27 +1,67 @@
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import createIntlMiddleware from "next-intl/middleware";
+
+import { getToken } from "next-auth/jwt";
+import { defaultLocale, Locale, locales } from "./i18n/locales";
+
 
 const authPages = ["/auth/signin", "/auth/signup"];
 const protectedPages = ["/dashboard"];
 
-export async function middleware(req: NextRequest){
+const intlMiddleWare = createIntlMiddleware({
+    locales: locales,
+    defaultLocale: defaultLocale,
+    localeDetection: true,
+    localePrefix: "always",
+})
 
-  const pathname = req.nextUrl.pathname;
+export default async function middleware(req: NextRequest) {
+    const pathName = req.nextUrl.pathname; // localehost:3000/ en = ru/...
 
-  const isAuthPage = authPages.some(page => pathname.startsWith(page));
+    const pathnameSeqment = pathName.split("/").filter(Boolean); // [en, ...]
+    const locale = pathnameSeqment[0];
 
-  const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const isValidLocale = locales.includes(locale as Locale); // true
 
-  if(session?.email) {
-    if(isAuthPage){
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+    if (!isValidLocale && pathnameSeqment[0] !== "") {
+        return NextResponse.redirect(new URL(`/${defaultLocale}${pathName}`, req.url)); // localhost:3000/en/...
     }
-  }
 
-  if(protectedPages.some(page => pathname.startsWith(page)) && !session?.email) {
-    return NextResponse.redirect(new URL("/auth/signin", req.url));
-  }
+    if (isValidLocale) {
+        const pathWithoutLocale = `/${pathnameSeqment.slice(1).join("/")}`; // en/...
+        const isAuthPage = authPages.some(page => pathWithoutLocale.startsWith(page));
+        const isProtectedPage = protectedPages.some(page => pathWithoutLocale.startsWith(page));
 
-  return NextResponse.next();
+        const session = await getToken({
+            req,
+            secret: process.env.NEXTAUTH_SECRET,
+        });
 
+        // If user is authenticated and trying to access auth pages, redirect to dashboard
+        if (session?.email && isAuthPage) {
+            return NextResponse.redirect(new URL(`/${locale}/dashboard`, req.url));
+        }
+
+        // If user is not authenticated and trying to access protected pages, redirect to signin
+        if (!session?.email && isProtectedPage) {
+            return NextResponse.redirect(new URL(`/${locale}/auth/signin`, req.url));
+        }
+    }
+
+
+    return intlMiddleWare(req);
 }
+
+export const config = {
+    matcher: ['/((?!api|_next|public|.*\\..*).*)'],
+  };
+
+
+
+
+
+
+
+
+
+
