@@ -4,6 +4,7 @@ import "./globals.css";
 
 import AuthProvider from "@/components/features/shared/providers/auth/auth-provider";
 import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -27,7 +28,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   return (
     <html lang="en" className="light">
       <body
