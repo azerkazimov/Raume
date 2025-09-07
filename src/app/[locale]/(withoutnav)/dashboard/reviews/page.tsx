@@ -1,35 +1,65 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { reviewSchema, ReviewSchema } from "./schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import Reviews from "@/components/pages/dashboard/dasboard-review";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ReviewIdSchema, reviewSchema, ReviewSchema } from "./schema";
+import { useEffect, useState } from "react";
 
 export default function DashboardReviewsPage() {
+  const [reviews, setReviews] = useState<ReviewIdSchema[]>([]);
+  const [editingReview, setEditingReview] = useState<ReviewIdSchema | null>(
+    null
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = useForm<ReviewSchema>({
     resolver: zodResolver(reviewSchema),
   });
 
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    const response = await fetch("/api/reviews");
+    const reviews = await response.json();
+    setReviews(reviews);
+    console.log("Reviews fetched:", reviews);
+  };
+
   const onSubmit = async (data: ReviewSchema) => {
     try {
-      const response = await fetch("/api/reviews", {
-        method: "POST",
+      const method = editingReview ? "PUT" : "POST";
+      const url = editingReview
+        ? `/api/reviews/${editingReview.id}`
+        : "/api/reviews";
+      const body = data;
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
 
       if (response.ok) {
-        const review = await response.json();
-        console.log("Review created:", review);
-        reset();
+        // refresh review list
+        await fetchReviews();
+        setEditingReview(null);
+        reset({
+          content: "",
+          rating: "",
+        });
       } else {
         console.error("Failed to create review");
       }
@@ -38,9 +68,40 @@ export default function DashboardReviewsPage() {
     }
   };
 
+  const deleteReview = async (id: string) => {
+    try {
+      const response = await fetch(`/api/reviews/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setReviews(reviews.filter((review) => review.id !== Number(id)));
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to delete review", errorData);
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
+
+  const editReview = (review: ReviewIdSchema) => {
+    setEditingReview(review);
+    setValue("content", review.content);
+    setValue("rating", review.rating);
+    reset(review);
+  };
+
+  const cancelEdit = () => {
+    setEditingReview(null);
+    reset({
+      content: "",
+      rating: "",
+    });
+  };
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-12">Reviews</h1>
+      <h1 className="text-2xl font-bold mb-12">Dashboard Reviews</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="content">Content</label>
@@ -57,12 +118,23 @@ export default function DashboardReviewsPage() {
           )}
         </div>
 
-        <Button type="submit" className="w-full cursor-pointer">
-          {"Submit"}
-        </Button>
+        <div className="flex gap-2">
+          <Button type="submit" className=" cursor-pointer">
+            {editingReview ? "Update" : "Submit"}
+          </Button>
+          {editingReview && (
+            <Button
+              type="button"
+              className=" cursor-pointer"
+              onClick={cancelEdit}
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
       </form>
 
-      <Reviews />
+      <Reviews reviews={reviews} editReview={editReview} deleteReview={deleteReview} />
     </div>
   );
 }

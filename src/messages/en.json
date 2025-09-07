@@ -4,5 +4,13 @@
       "about" :{
         "title": "Beautifully Arranged Smart Spaces."
       }
+    },
+    "ReviewsPage": {
+      "title": "Reviews",
+      "view": "View",
+      "back": "Back to Reviews",
+      "content": "Review Content",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
     }
   }
