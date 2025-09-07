@@ -13,3 +13,8 @@ HOMEWORK TASK:
             </div>
           </Link>
 для перехода на страницу
+
+5. Повторить логику "Отзывов (Reviews)" в вашем проекте с полным пакетом REST FULL API (GET, POST, PUT(UPDATE), DELETE).
+Связать все с базой данных через Prisma ORM
+Использовать при этом => react hook form | zod validator (yup, formik)
+А также отобразить отзывы на пользовательский страницах
