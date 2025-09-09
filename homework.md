@@ -18,3 +18,9 @@ HOMEWORK TASK:
 Связать все с базой данных через Prisma ORM
 Использовать при этом => react hook form | zod validator (yup, formik)
 А также отобразить отзывы на пользовательский страницах
+
+6. Создать CRUD логику для страницы "Comments" 
+- интегрировать prisma schema на страницу
+- на dashboard/comments странице использовать react-hook-form и zod 
+- создать route.ts файлы с логикой для CRUD операций (GET, PUT, POST, DELETE)
+- на страницaх comments и comments/[id]  использовать библиотеку useSWR для обработки запроса в клиентских компонентах

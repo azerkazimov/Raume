@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 
 import useSWR from "swr";
-import { fetcher } from "@/hooks/fetcher";
+import { fetcher } from "@/components/pages/reviews/hooks/fetcher";
 // import { useEffect, useState } from "react";
 
 export default function ReviewIdPage() {

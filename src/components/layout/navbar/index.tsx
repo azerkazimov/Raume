@@ -63,6 +63,12 @@ export function Navbar() {
               >
                 <Link href="/reviews">Reviews</Link>
               </NavigationMenuLink>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <Link href="/comments">Comments</Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

@@ -14,7 +14,8 @@ export default function DashboardReviewsPage() {
   const [editingReview, setEditingReview] = useState<ReviewIdSchema | null>(
     null
   );
-
+  
+  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -23,10 +24,7 @@ export default function DashboardReviewsPage() {
     reset,
   } = useForm<ReviewSchema>({
     resolver: zodResolver(reviewSchema),
-   
   });
-
- 
 
   useEffect(() => {
     fetchReviews();
@@ -136,7 +134,11 @@ export default function DashboardReviewsPage() {
         </div>
       </form>
 
-      <Reviews reviews={reviews} editReview={editReview} deleteReview={deleteReview} />
+      <Reviews
+        reviews={reviews}
+        editReview={editReview}
+        deleteReview={deleteReview}
+      />
     </div>
   );
 }
