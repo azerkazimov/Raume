@@ -1,38 +1,54 @@
 "use client";
 import { ReviewIdSchema } from "@/app/[locale]/(withoutnav)/dashboard/reviews/schema";
+import Loading from "@/components/features/shared/loading";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeftIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { fetcher } from "@/hooks/fetcher";
+// import { useEffect, useState } from "react";
 
 export default function ReviewIdPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [review, setReview] = useState<ReviewIdSchema | null>(null);
-
   const t = useTranslations("ReviewsPage");
 
-  // fetch review by id ... Your code here
-  useEffect(() => {
-    const fetchReview = async () => {
-      if (!id) return;
+  const { data: review, isLoading, error } = useSWR<ReviewIdSchema>(
+    id ? `${process.env.NEXT_PUBLIC_BASE_URL}/reviews/${id}` : null,
+    fetcher
+  );
 
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/reviews/${id}`
-        );
-        const data = await response.json();
-        setReview(data);
-      } catch (error) {
-        console.error("Error fetching review", error);
-      }
-    };
+  // const [review, setReview] = useState<ReviewIdSchema | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
-    fetchReview();
-  }, [id]);
+  // // fetch review by id ... Your code here
+  // useEffect(() => {
+  //   const fetchReview = async () => {
+  //     if (!id) return;
+
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASE_URL}/reviews/${id}`
+  //       );
+  //       const data = await response.json();
+  //       setReview(data);
+  //     } catch (error) {
+  //       console.error("Error fetching review", error);
+  //       setError("Error fetching review");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchReview();
+  // }, [id]);
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="container mx-auto py-8">

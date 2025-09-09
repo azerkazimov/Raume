@@ -23,7 +23,10 @@ export default function DashboardReviewsPage() {
     reset,
   } = useForm<ReviewSchema>({
     resolver: zodResolver(reviewSchema),
+   
   });
+
+ 
 
   useEffect(() => {
     fetchReviews();
@@ -33,7 +36,6 @@ export default function DashboardReviewsPage() {
     const response = await fetch("/api/reviews");
     const reviews = await response.json();
     setReviews(reviews);
-    console.log("Reviews fetched:", reviews);
   };
 
   const onSubmit = async (data: ReviewSchema) => {

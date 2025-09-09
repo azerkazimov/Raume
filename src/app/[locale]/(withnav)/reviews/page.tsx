@@ -1,14 +1,15 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StarIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { ReviewIdSchema } from "../../(withoutnav)/dashboard/reviews/schema";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
-import { StarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default async function ReviewsPage() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/reviews`);
   const reviews = await response.json();
   const t = await getTranslations("ReviewsPage");
+  
   return (
     <div className="container mx-auto h-screen">
       <h1 className="text-2xl font-bold my-12 text-center">Reviews</h1>
