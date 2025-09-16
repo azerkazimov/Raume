@@ -1,158 +1,27 @@
-"use client";
+import { getTranslations } from "next-intl/server";
+import SignUp from "./signup";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { SignUpSchema, signUpSchema } from "../schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import toast from 'react-hot-toast';
+export async function generateMetadata({params}: {params: {locale: string}}) {
+  const {locale} = await params;
+  const t = await getTranslations("metadata.auth.signup");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: locale === "en" ? "/auth/signup" : `/${locale}/auth/signup`,
+      languages: {
+        "en-US": "/en/auth/signup",
+        "ru-RU": "/ru/auth/signup",
+      },
+    },
+  }
+}
 
-export default function SignUp() {
-  const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-  });
-
-  const onSubmit = async (data: SignUpSchema) => {
-    try {
-      const response = await fetch("/api/users", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-
-      const user = await response.json();
-      console.log(user);
-
-      if (response.ok) {
-        toast.success("Account created successfully");
-        router.push("/auth/signin");
-      } else {
-        throw new Error(user.error || "Something went wrong");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
-  };
-
+export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>Create your account</CardTitle>
-          <CardDescription>
-            Enter your details below to create your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  {...register("name")}
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="John Doe"
-                />
-                {errors.name && (
-                  <span className="text-red-500">{errors.name.message}</span>
-                )}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  {...register("email")}
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="mail@example.com"
-                />
-                {errors.email && (
-                  <span className="text-red-500">{errors.email.message}</span>
-                )}
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input
-                  {...register("password")}
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="********"
-                />
-                {errors.password && (
-                  <span className="text-red-500">
-                    {errors.password.message}
-                  </span>
-                )}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="passwordConfirm">Confirm Password</Label>
-                <Input
-                  {...register("passwordConfirm")}
-                  id="passwordConfirm"
-                  name="passwordConfirm"
-                  type="password"
-                  placeholder="********"
-                />
-              </div>
-              {errors.passwordConfirm && (
-                <span className="text-red-500">
-                  {errors.passwordConfirm.message}
-                </span>
-              )}
-            </div>
-            <Button type="submit" className="w-full mt-4">
-              Register
-            </Button>
-          </form>
-        </CardContent>
-        <CardFooter className="flex-col gap-2">
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-          >
-            Sign up with Github
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          >
-            Sign up with Google
-          </Button>
-          <div className="text-center text-sm text-gray-600">
-            Already have an account?{" "}
-            <button
-              type="button"
-              onClick={() => router.push("/auth/signin")}
-              className="text-blue-600 hover:underline"
-            >
-              Sign in
-            </button>
-          </div>
-        </CardFooter>
-      </Card>
+    <div>
+      <SignUp />
     </div>
-  );
+  )
 }

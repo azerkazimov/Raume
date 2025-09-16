@@ -27,6 +27,13 @@ export default async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL(`/${defaultLocale}${pathName}`, req.url)); // localhost:3000/en/...
     }
 
+    if(pathName === `/${locale}/auth/sign-in`) {
+        return NextResponse.redirect(new URL(`/${locale}/auth/signin`, req.url));
+    }
+    if(pathName === `/${locale}/auth/sign-up`) {
+        return NextResponse.redirect(new URL(`/${locale}/auth/signup`, req.url));
+    }
+
     if (isValidLocale) {
         const pathWithoutLocale = `/${pathnameSeqment.slice(1).join("/")}`; // en/...
         const isAuthPage = authPages.some(page => pathWithoutLocale.startsWith(page));

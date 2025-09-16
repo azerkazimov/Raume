@@ -4,12 +4,38 @@ import { StarIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { ReviewIdSchema } from "../../(withoutnav)/dashboard/reviews/schema";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Reviews - Raume",
+//   description: "Reviews",
+// }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations("metadata.reviews");
+  const { locale } = await params;
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: locale === "en" ? "/reviews" : `/${locale}/reviews`,
+      languages: {
+        "en-US": "/en/reviews",
+        "ru-RU": "/ru/reviews",
+      },
+    },
+  };
+}
 
 export default async function ReviewsPage() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/reviews`);
   const reviews = await response.json();
   const t = await getTranslations("ReviewsPage");
-  
+
   return (
     <div className="container mx-auto h-screen">
       <h1 className="text-2xl font-bold my-12 text-center">Reviews</h1>

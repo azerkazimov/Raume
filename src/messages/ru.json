@@ -1,4 +1,24 @@
 {
+    "metadata": {
+        "reviews": {
+            "title": "Отзывы - Raume",
+            "description": "Отзывы"
+        },
+        "characters": {
+            "title": "Персонажи - Raume",
+            "description": "Персонажи"
+        },
+        "auth": {
+            "signin": {
+                "title": "Вход - Raume",
+                "description": "Вход"
+            },
+            "signup": {
+                "title": "Регистрация - Raume",
+                "description": "Регистрация"
+            }
+        }
+    },
     "HomePage": {
         "title": "ИНТЕРЬЕР",
         "about": {

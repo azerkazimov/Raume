@@ -1,16 +1,36 @@
 {
-    "HomePage": {
-      "title": "INTERIOR",
-      "about" :{
-        "title": "Beautifully Arranged Smart Spaces."
-      }
+  "metadata": {
+    "reviews" :{
+      "title": "Reviews - Raume",
+      "description": "Reviews"
     },
-    "ReviewsPage": {
-      "title": "Reviews",
-      "view": "View",
-      "back": "Back to Reviews",
-      "content": "Review Content",
-      "createdAt": "Created At",
-      "updatedAt": "Updated At"
+    "characters": {
+      "title": "Characters - Raume",
+      "description": "Characters"
+    },
+    "auth": {
+      "signin": {
+        "title": "Sign In - Raume",
+        "description": "Sign In"
+      },
+      "signup": {
+        "title": "Sign Up - Raume",
+        "description": "Sign Up"
+      }
     }
+  },
+  "HomePage": {
+    "title": "INTERIOR",
+    "about": {
+      "title": "Beautifully Arranged Smart Spaces."
+    }
+  },
+  "ReviewsPage": {
+    "title": "Reviews",
+    "view": "View",
+    "back": "Back to Reviews",
+    "content": "Review Content",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At"
   }
+}

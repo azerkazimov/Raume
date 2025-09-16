@@ -12,11 +12,11 @@ export default function About() {
   return (
     <div className="container py-[100px]">
       <div className="flex flex-col md:flex-row md:gap-[110px]">
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center justify-center">
           <X size={24} />
           <span className="text-sm font-poppins w-max">About Us</span>
         </div>
-        <div className="font-poppins max-w-[800px] ">
+        <div className="font-poppins max-w-[800px] text-center md:text-start">
           <p className="text-[36px]">
             Our modern interiors reflect your lifestyle—creating beautiful,
             uniquely yours spaces. We design with heart and precision.
@@ -44,21 +44,21 @@ export default function About() {
         </div>
       </div>
 
-      <div className="w-full flex justify-between mt-[100px]">
+      <div className="w-full flex justify-between mt-[100px] flex-col md:flex-row items-center">
         <div className="flex flex-col">
-          <span className="text-sm min-w-[300px]">Project</span>
+          <span className="text-sm text-center md:text-start">Project</span>
           <p className="text-[96px]">
             <span>{projects}</span>+
           </p>
         </div>
-        <div className="flex flex-col">
-          <span className="text-sm min-w-[300px]">Client</span>
+        <div className="flex flex-col ">
+          <span className="text-sm text-center md:text-start">Client</span>
           <p className="text-[96px]">
             <span>{client}</span>+
           </p>
         </div>
         <div className="flex flex-col">
-          <span className="text-sm min-w-[300px]">Material</span>
+          <span className="text-sm text-center md:text-start">Material</span>
           <p className="text-[96px]">
             <span>{material}</span>+
           </p>
